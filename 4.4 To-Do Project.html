@@ -14,29 +14,36 @@ Remove a todo -->
             margin: auto;
             position: relative;
         }
+        * {
+            box-sizing: border-box;
+        }
         html {
             height: 98vh;
             width: 98vw;
             margin: auto;
         }
         .left {
-            width: 38vw;
+            width: 35%;
             float: left;
             position: absolute;
             left: 0;
             /* clear: right; */
             height: 98vh;
             border: 3px solid red;
-            padding: 5px;
+            padding: 1%;
+        }
+        h3 {
+            /* text-align: center; */
+            text-decoration: underline;
         }
         .right {
-            width: 58vw;
+            width: 65%;
             /* float: right; */
             right: 0;
             position: absolute;
             height: 98vh;
             border: 3px solid blue;
-            padding: 5px;
+            padding: 1%;
         }
         #todo {
             width: 100%;
@@ -57,6 +64,7 @@ Remove a todo -->
             <button id="create">Add task</button>
         </div>
         <div class="right">
+            <h3>To do:</h3>
             <ul id="tasks">
 
             </ul>
@@ -71,7 +79,7 @@ taskList = document.getElementById('tasks');
 
 //Add new tasks to localStorage
 createButton.addEventListener('click', function() {
-    let newTask = document.getElementById('task').value;
+    let newTask = document.getElementById('task').value.trim();
     document.getElementById('task').value = '';
 
     var taskSpan = document.createElement('span');
@@ -79,7 +87,7 @@ createButton.addEventListener('click', function() {
     var completeButton = document.createElement('button')
     completeButton.innerText = 'x'
 
-    taskSpan.innerText = newTask
+    taskSpan.innerText = newTask + " "
     // inProgress.push(newTask)
     localStorage.setItem(`${newTask} task`, 'in progress')
 
@@ -98,11 +106,11 @@ taskList.addEventListener('click', function(event) {
     if (event.target.tagName==='SPAN')  {
         event.target.classList.toggle('done')
 
-        if (localStorage.getItem(`${event.target.innerText} task`)==='in progress') {
-            localStorage.setItem(`${event.target.innerText} task`, 'complete')
+        if (localStorage.getItem(`${event.target.innerText.trim()} task`)==='in progress') {
+            localStorage.setItem(`${event.target.innerText.trim()} task`, 'complete')
         }
         else {
-            localStorage.setItem(`${event.target.innerText} task`, 'in progress')
+            localStorage.setItem(`${event.target.innerText.trim()} task`, 'in progress')
         }
         
     }
