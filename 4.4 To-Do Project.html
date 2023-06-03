@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<!--As a user, you should be able to:
+Add a new todo (by submitting a form)
+Mark a todo as completed (cross out the text of the todo)
+Remove a todo -->
+<html lang="en">
+
+<head>
+    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0">
+    <style>
+        body {
+            min-height: 98vh;
+            width: 98vw;
+            margin: auto;
+            position: relative;
+        }
+        html {
+            height: 98vh;
+            width: 98vw;
+            margin: auto;
+        }
+        .left {
+            width: 38vw;
+            float: left;
+            position: absolute;
+            left: 0;
+            /* clear: right; */
+            height: 98vh;
+            border: 3px solid red;
+            padding: 5px;
+        }
+        .right {
+            width: 58vw;
+            /* float: right; */
+            right: 0;
+            position: absolute;
+            height: 98vh;
+            border: 3px solid blue;
+            padding: 5px;
+        }
+        #todo {
+            width: 100%;
+        }
+        #add-item {
+            width: 100%;
+            border: 3px solid green;
+        }
+        .done {
+            text-decoration: line-through;
+        }
+    </style>
+</head>
+    <body>
+        <div class="left">
+            <label for="task">Task: </label>
+            <input type="text" id="task" name="task">
+            <button id="create">Add task</button>
+        </div>
+        <div class="right">
+            <ul id="tasks">
+
+            </ul>
+        </div>
+    </body>
+</html>
+
+<script>
+
+const createButton = document.getElementById('create');
+taskList = document.getElementById('tasks');
+
+//Add new tasks to localStorage
+createButton.addEventListener('click', function() {
+    let newTask = document.getElementById('task').value;
+    document.getElementById('task').value = '';
+
+    var taskSpan = document.createElement('span');
+    var listItem = document.createElement('li');
+    var completeButton = document.createElement('button')
+    completeButton.innerText = 'x'
+
+    taskSpan.innerText = newTask
+    // inProgress.push(newTask)
+    localStorage.setItem(`${newTask} task`, 'in progress')
+
+    
+
+    //add tasks to list
+    listItem.appendChild(taskSpan)
+    listItem.appendChild(completeButton)
+    taskList.appendChild(listItem)
+})
+
+//mark items as complete
+//change their values in storage
+
+taskList.addEventListener('click', function(event) {
+    if (event.target.tagName==='SPAN')  {
+        event.target.classList.toggle('done')
+
+        if (localStorage.getItem(`${event.target.innerText} task`)==='in progress') {
+            localStorage.setItem(`${event.target.innerText} task`, 'complete')
+        }
+        else {
+            localStorage.setItem(`${event.target.innerText} task`, 'in progress')
+        }
+        
+    }
+})
+
+
+//Remove items from localStorage and list
+taskList.addEventListener('click', function(event) {
+    if (event.target.tagName==='BUTTON') {
+        event.target.parentElement.remove();
+        taskText = event.target.parentElement.querySelector('span').innerText.trim()
+        // console.log(taskText)
+        // console.log(localStorage.getItem(`${taskText} task`))
+        localStorage.removeItem(`${taskText} task`)
+    }
+})
+
+//get items out of localStorage
+//put items from localStorage into spans
+//add class 'done' to items with value 'complete'
+window.addEventListener('load', function() {
+    // tasksFromStorage = JSON.parse(localStorage.getItem('in progress'))
+    for (i=0; i<localStorage.length; i++) {
+        var taskSpan = document.createElement('span');
+        var listItem = document.createElement('li');
+        var completeButton = document.createElement('button')
+        completeButton.innerText = 'x'
+
+        taskKey = localStorage.key(i)
+        if (taskKey.endsWith('task')) { //this is absolutely not the correct way to do this, but it seems to work
+            taskSpan.innerText = taskKey.replace("task", "")
+            taskValue = localStorage.getItem(taskKey)
+
+            if (taskValue==='complete') {
+                taskSpan.classList.add('done')
+            }
+
+            listItem.appendChild(taskSpan)
+            listItem.appendChild(completeButton)
+            taskList.appendChild(listItem)
+        }
+        
+    }
+})
+
+
+</script>
