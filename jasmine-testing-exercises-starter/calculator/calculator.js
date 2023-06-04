@@ -9,13 +9,13 @@ window.addEventListener('DOMContentLoaded', function() {
   }
 });
 
-function getCurrentUIValues() {
-  return {
-    amount: +(document.getElementById("loan-amount").value),
-    years: +(document.getElementById("loan-years").value),
-    rate: +(document.getElementById("loan-rate").value),
-  }
-}
+// function getCurrentUIValues() {
+//   return {
+//     amount: +(document.getElementById("loan-amount").value),
+//     years: +(document.getElementById("loan-years").value),
+//     rate: +(document.getElementById("loan-rate").value),
+//   }
+// }
 
 // Get the inputs from the DOM.
 // Put some default values in the inputs
@@ -38,20 +38,22 @@ function setupIntialValues() {
       years: loanYears.value, 
       rate: loanRate.value
     }
-  
-    if (loanAmount.value > 0 && loanYears.value > 0 && loanRate.value > 0) {
-      let monthly = calculateMonthlyPayment(vals)
-      updateMonthly(monthly)
-    }
-    
+    update(vals)
   })
   
 }
 
 // Get the current values from the UI
 // Update the monthly payment
-function update() {
-  
+function update(vals) {
+  // let vals = setupIntialValues()
+  console.log(vals.amount, vals.years, vals.rate)
+  if (vals.amount > 0 && vals.years > 0 && vals.rate > 0) {
+    let results = calculateMonthlyPayment(vals)
+    console.log("monthly", results[0])
+    console.log('int', results[1])
+    updateMonthly([results[0]])
+  }
 }
 
 // Given an object of values (a value has amount, years and rate ),
@@ -65,10 +67,12 @@ function calculateMonthlyPayment(values) {
   let dividend = (princ * interest)
   let divisor = 1-(1+interest) ** -payments
 
-  let monthlyPayment = String(dividend/divisor)
+  let result = dividend/divisor
+  let monthlyPayment = String(result)
   let endPosition = monthlyPayment.indexOf('.') + 3
   let output = `$${monthlyPayment.slice(0, endPosition)}`
-  return output;
+
+  return [output, result]
 }
 
 // Given a string representing the monthly payment value,
