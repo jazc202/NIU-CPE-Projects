@@ -61,7 +61,7 @@ function update(vals) {
 // that always has 2 decimal places.
 function calculateMonthlyPayment(values) {
   let princ = values.amount
-  let interest = values.rate /100
+  let interest = values.rate / 100
   let payments = values.years * 12
   
   let dividend = (princ * interest)
@@ -72,7 +72,7 @@ function calculateMonthlyPayment(values) {
   let endPosition = monthlyPayment.indexOf('.') + 3
   let output = `$${monthlyPayment.slice(0, endPosition)}`
 
-  return [output, result]
+  return [output, result, dividend, divisor]
 }
 
 // Given a string representing the monthly payment value,

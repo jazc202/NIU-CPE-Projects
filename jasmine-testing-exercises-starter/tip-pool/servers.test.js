@@ -11,9 +11,9 @@ describe("Servers test (with setup and tear-down)", function() {
     expect(allServers['server' + serverId].serverName).toEqual('Alice');
   });
 
-  it('should '), function () {
-    updateServerTable();
-  }
+  it('should Correctly update the server table', function () {
+    expect(serverTbody.childNodes.length).toEqual(1);
+  })
 
   afterEach(function() {
     serverNameInput.value = '';
