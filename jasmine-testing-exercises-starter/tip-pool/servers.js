@@ -13,6 +13,7 @@ function submitServerInfo(evt) {
   if (evt) evt.preventDefault(); // when running tests there is no event
 
   let serverName = serverNameInput.value;
+  console.log(`submitting server ${serverName}`)
 
   if (serverName !== '') {
     serverId++;
@@ -27,6 +28,7 @@ function submitServerInfo(evt) {
 // Create table row element and pass to appendTd function with input value
 function updateServerTable() {
   serverTbody.innerHTML = '';
+  console.log('updating Server table')
 
   for (let key in allServers) {
     let curServer = allServers[key];
@@ -38,6 +40,8 @@ function updateServerTable() {
 
     appendTd(newTr, curServer.serverName);
     appendTd(newTr, '$' + tipAverage.toFixed(2));
+    appendDeleteBtn(newTr, serverId);
+
 
     serverTbody.append(newTr);
   }

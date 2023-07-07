@@ -16,6 +16,6 @@ describe("Servers test (with setup and tear-down)", function() {
   })
 
   afterEach(function() {
-    serverNameInput.value = '';
+    serverNameInput.value = null;
   });
 });
