@@ -1,4 +1,5 @@
-/*
+
+    /*
 Write a function called extractValue which accepts an array of objects and a key and returns a new array with the value of each object at the key.
 
 Examples:
@@ -7,19 +8,12 @@ Examples:
 */
 
 function extractValue(arr, key) {
-    let extracted =  arr.reduce(function(acc, val) {
-        let values = acc += ',' + val[key]
-        return values.split(',')
-    }, '')
-    return extracted.filter(function(val) {
-        if (val === '') {
-            return false
-        }
-        else {
-            return true
-        }
-    }) // this is so scuffed but it works, i guess
-
+    return arr.reduce(function(acc, val) {
+        const value = val[key]
+        const array = acc
+        array.push(value)
+        return array
+    }, [])
 }
 
 /*
@@ -34,27 +28,29 @@ Examples:
 */
 
 function vowelCount(str) {
-}
-//     let vowels = strArray.filter(function(val) {
-//         if (val === 'a' || val === 'e' || val === 'i' || val === 'o' || val === 'u') {
-//             return true
-//         }
-//         else {
-//             return false
-//         }
-//     })
-//     let whichVowels = Array.from(new Set([...vowels]))
-//     let countofVowels = vowels.filter(function(val) {
-//         return val 
-//     })
-//     return whichVowels
-//     // let vow = vowels.reduce(function(acc, val) {
-//     //     let values = acc += ',' + val
-//     //     return values.split(',').sort()
-//     // })
-    
-// }
+    //convert str to array - lowercase for ease
+    let strArray = str.toLowerCase().split('')
 
+    //filter the strArray and put vowels in new array
+    let vowels = strArray.filter(function(val) {
+    if (val === 'a' || val === 'e' || val === 'i' || val === 'o' || val === 'u') {
+        return true
+    }
+    else {
+        return false
+    }
+    })
+
+    return vowels.reduce(function(vowelCounts, vowel) {
+        if (vowelCounts[vowel] == null) {
+            vowelCounts[vowel] = 1
+        }
+        else {
+            vowelCounts[vowel] += 1
+        }
+        return vowelCounts
+    }, {})
+}
 /*
 Write a function called addKeyAndValue which accepts an array of objects and returns the array of objects passed to it with each object now including the key and value passed to the function.
 
@@ -70,7 +66,13 @@ Examples:
        ]
 */
 
-function addKeyAndValue(arr, key, value) {}
+function addKeyAndValue(arr, key, value) {
+    return arr.reduce(function(acc, val) {
+        let newObj = arr
+        val[key] = value
+        return newObj
+    }, {})
+}
 
 /*
 Write a function called partition which accepts an array and a callback and returns an array with two arrays inside of it. The partition function should run the callback function on each value in the array and if the result of the callback function at that specific value is true, the value should be placed in the first subarray. If the result of the callback function at that specific value is false, the value should be placed in the second subarray. 
@@ -94,4 +96,17 @@ Examples:
     partition(names, isLongerThanThreeCharacters) // [['Elie', 'Colt', 'Matt'], ['Tim']]
 */
 
-function partition(arr, callback) {}
+function partition(arr, callback) {
+    let first = []
+    let second = []
+    arr.map(function(val){
+        let v = callback(val)
+        if (v === true) {
+            first.push(val)
+        }
+        else {
+            second.push(val)
+        }
+    })
+    return [first, second]
+}
