@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Document</title>
+        <link rel="stylesheet"
+              href="https://unpkg.com/bootstrap/dist/css/bootstrap.css">
+        <style>
+      
+          img {
+            max-width: 70%;
+          }
+      
+          .image-center {
+            display: block;
+            margin: 10px auto;
+          }
+      
+          table, th, td {
+            border: 1px solid black;
+          }
+          table {
+            width: 90%;
+            margin: auto;
+            table-layout: auto;
+            text-align: center;
+          }
+          .movieList {
+            border: 1px solid blue;
+          }
+        </style>
+    </head>
+    <body>
+        <label>Movie title: <input type='text' id="title"></label>
+        <label>Movie rating: <input id="rating" type="number" min="0" max="10"></label>
+        <button id="submit">Submit</button>
+
+        <div class="movieList">
+            <table id="movies">
+                <thead>
+                    <tr>
+                        <th id="titleHead">Movie</th>
+                        <th id="ratingHead">Rating</th>
+                        <th>Remove</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                </tbody>
+            </table>
+        </div>
+        <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+        <script>
+            $('#submit').click(function(){
+                
+                let title = $('#title').val()
+                let rating = $('#rating').val()
+
+                if(title.length >= 2 && rating >= 0 && rating <=10) {
+                    $(`<tr><td id='movieTitle'>${title}</td><td id='movieRating'>${rating}</td><td id='remove'>X</td></tr>`).appendTo('#movies tbody')
+                    $('#title').val("")
+                    $('#rating').val("")
+
+                }
+                else {
+                    console.log('invalid input')
+                }
+            })
+            $('table').on('click', function(event) {
+                if(event.target.id === 'remove') {
+                    $(event.target).parent().remove()
+                }
+                if(event.target.id === 'titleHead') {
+                    let rows = $('#movies tbody').children()
+                    let movies = $('#movies tbody').children().children('#movieTitle')
+                    let firstRow = movies[0]
+                    // console.log(firstRow.innerText)
+                    movies.each(function() {
+                        if($(this).text().toLowerCase() < firstRow.innerText.toLowerCase()) {
+                            console.log($(this).parent())
+                            $('#movies tbody').prepend($(this).parent())
+                        }
+                    })
+                    
+                    }
+                    if(event.target.id === 'ratingHead') {
+                    let rows = $('#movies tbody').children()
+                    let movies = $('#movies tbody').children().children('#movieTitle')
+                    let firstRow = movies[0]
+                    // console.log(firstRow.innerText)
+                    movies.each(function() {
+                        if($(this).text().toLowerCase() < firstRow.innerText.toLowerCase()) {
+                            console.log($(this).parent())
+                            $('#movies tbody').prepend($(this).parent())
+                        }
+                    })
+                    
+                    }
+                }
+            )
+        </script>
+    </body>   
+</html>

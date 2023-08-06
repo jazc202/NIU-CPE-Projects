@@ -74,7 +74,34 @@
 </div>
 <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
 <script>
-  // Add your code here!
+  $(document).ready(function(){
+    console.log("Let's get ready to party with jQuery!")
+  })
+  $("article img").addClass('image-center')
+  $("article p:last").remove()
+  $("#title").css("font-size", function () {
+    return Math.floor(Math.random() * (100 - 0 + 1) + 0)
+  })
+  $("<li>I like pie</li>").appendTo("ol")
+  $("aside").empty()
+  $("<p>It has been brought to our attention that the list that was previously contained in this section was silly.  We apologize for it's existence and any giggles it may have caused.</p>").appendTo('article')
+
+  $(`.form-control`).change(function() {
+      let red = $(this).parent().parent().children('div:nth-child(1)').children().val()
+      let green = $(this).parent().parent().children('div:nth-child(3)').children().val()
+      let blue = $(this).parent().parent().children('div:nth-child(2)').children().val()
+      $('body').css('background-color', function() {
+        return `rgb(${red}, ${green}, ${blue} )`
+    })
+    })
+
+    $('img').click(function() {
+      this.remove()
+    })
+
+  // $('.form-control:first').change(function() {
+  //     console.log(this.value)
+  // })
 </script>
 </body>
 
