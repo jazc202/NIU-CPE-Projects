@@ -1,0 +1,28 @@
+{% extends 'page.html' %}
+{% block title %} Form page {% endblock %}
+{% block content %}
+<h2>Questions!</h2>
+    <form id='story_form' method="post" action="stories" onsubmit="return formValidation()" name="storyForm">
+        {% for x in questions %}
+            <label> {{x}}: <input type='text' name="{{x}}" class="word"></label><br>
+        {% endfor %}
+        <input type="text" hidden value={{format}} name="format">
+        <input type="submit" value="Submit" id="submit">
+    </form>
+
+    <script>
+        let words = document.querySelectorAll('.word')
+        let submit = document.getElementById('submit')
+
+        function formValidation() {
+            for (let w of words) {
+                if (w.value == '' || w.value.length < 3) {
+                    alert('bad data')
+                    return false
+                    break
+                }
+            }
+        }
+        
+    </script>
+{% endblock %}

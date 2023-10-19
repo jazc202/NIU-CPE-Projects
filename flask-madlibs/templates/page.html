@@ -1,0 +1,27 @@
+<!-- <!DOCTYPE html>
+<head>
+
+</head>
+<body>
+    <form id="questions">
+        {% for x in questions %}
+            <label> {{x}}: <input type='text' id="{{x}}"></label><br>
+        {% endfor %}
+    </form>
+</body> -->
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>{% block title %}Mad Libs{% endblock %}</title>
+        <link rel="stylesheet" href="/static/style.css">
+        <script src="http://unpkg.com/jquery"></script>
+    </head>
+    <body>
+        <h1>Mad Libs!</h1>
+            <a href="addStory">Add story</a>
+            {% block dropdown %}{% endblock %}
+            {% block content %}{% endblock %}
+        
+    </body>
+</html>

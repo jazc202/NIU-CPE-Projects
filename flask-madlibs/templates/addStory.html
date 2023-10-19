@@ -1,0 +1,14 @@
+{% extends 'page.html' %}
+{% block title %} Create New Story {% endblock %}
+{% block content %}
+    <h2>Create your own!</h2>
+    <form id="add_story" action="/" method="post">
+        <label> List each part of speech on a new line<br>
+            <textarea name="partsOfSpeech"></textarea>
+        </label><br>
+        <label> Put story text here, with the parts of speech to substitute in {{"{"}}curly brackets{{"}"}}<br>
+            <textarea name="storyText"></textarea>
+        </label><br>
+        <input type="submit" value="submit">
+    </form>
+{% endblock %}

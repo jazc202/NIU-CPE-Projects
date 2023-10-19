@@ -1,0 +1,14 @@
+{% extends 'page.html' %}
+{% block title %} Form page {% endblock %}
+{% block dropdown %}
+<h2>Pick a story!</h2>
+<form method="post" action="forms">
+    <select id="formats" name="formats">
+        {% for format in f %}
+            <option name="{{f.index(format)}}" value={{f.index(format)}}>{{f.index(format)}}</option>
+        {% endfor %}
+    </select><br>
+    <input type="submit" value="Go!">
+</form>
+
+{% endblock %}
