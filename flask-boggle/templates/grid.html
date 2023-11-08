@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% block content %}
+{% for row in grid %}
+{{ row }}<br>
+{% endfor %}
+<form method="post" id="guess">
+    <label><input type="text" name="guess" id="guess_text"></label>
+    <input type="submit" value="Submit">
+</form>
+{% endblock %}
