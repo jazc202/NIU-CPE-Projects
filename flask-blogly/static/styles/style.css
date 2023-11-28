@@ -1,0 +1,27 @@
+* {
+    box-sizing: border-box;
+}
+
+img {
+    height: 100px;
+    width: 100px;
+    object-fit: cover;
+}
+
+.button {
+    display: inline-block;
+    height: 30px;
+    width: 50px;
+    border-radius: 10px;
+    text-align: center;
+    color: white;
+    padding: 5px;
+}
+
+#edit {
+    background-color: blue;
+}
+
+#delete {
+    background-color: red;
+}
