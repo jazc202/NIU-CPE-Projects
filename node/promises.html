@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head></head>
+    <body>
+        <label>Favorite number: <input type="text" id="fav"></label><button id="click">Click</button>
+        <ul id="facts"></ul>
+    </body>
+    <script>
+        let fav = document.querySelector('#fav')
+        let button = document.querySelector('#click')
+
+        button.addEventListener('click', function(e){
+            let url=`http://numbersapi.com/${fav.value}/trivia?json`
+        
+        // const options = {
+        //     method: 'POST',
+        //     headers: {
+        //         'Content-Type': 'application/json'
+        //     }
+        // }
+            let putIn = document.querySelector('#facts')
+                            
+
+            putIn.innerHTML = ''
+
+            for (let i=0; i<4; i++) {
+                fetch(url)
+                    .then((response)=>{
+                        let res = response.json()
+                        return res
+                    })
+                    .then((res)=> {
+                        console.log(res)
+
+                        if (!res.text) {
+                            let nums = fav.value.split(',')
+                            console.log(nums)
+                            nums.forEach(number=>{
+                                num = parseInt(number)
+                                console.log(res[num])
+                                putIn.innerHTML += `<li>${res[num]}</li>`
+                            })
+                            
+                        }
+
+                        else {
+                            console.log('else')
+                            putIn.innerHTML += `<li>${res.text}</li>`
+                        }
+                        
+
+                    })
+                    .catch((err)=>console.log(err))
+
+            }
+            })
+// 1. Make a request to the Numbers API (http://numbersapi.com/) to get a fact about your favorite number. (Make sure you get back JSON by including the ***json*** query key, specific to this API. [Details](http://numbersapi.com/#json).
+// 2. Figure out how to get data on multiple numbers in a single request. Make that request and when you get the data back, put all of the number facts on the page.
+// 3. Use the API to get 4 facts on your favorite number. Once you have them all, put them on the page. It’s okay if some of the facts are repeats.
+    
+//     *(Note: You’ll need to make multiple requests for this.)*
+// ## **Part 2: Deck of Cards**
+
+
+fetch("https://deckofcardsapi.com/api/deck/new/draw/?count=1")
+    .then((response)=>{
+        res = response.json()
+        return res
+    })
+    .then((res)=>{
+        // console.log(res.cards[0])
+        let cardObj = res.cards[0]
+
+        console.log(cardObj)
+        let deckId = res['deck_id']
+        let card1 = cardObj['code']
+        console.log(deckId)
+        return deckId
+    })
+    .then((deckId)=>{
+        fetch(`https://deckofcardsapi.com/api/deck/${deckId}/draw/?count=1`)
+
+        .then((response2)=>{
+            res2 = response2.json()
+            return res2
+        })
+
+        .then((res2)=>{
+            let cardObj = res2.cards[0]
+
+            console.log(cardObj)
+            let card1 = cardObj['code']
+            console.log(deckId)
+})
+    })
+    </script>
+</html>

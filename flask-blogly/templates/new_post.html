@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% block title %}List of Users{% endblock %}
+{% block content %}
+<ul>
+    <form method="post">
+        <label>Title: <input type="text" name="title" value=""></label>
+        <label>Content: <input type="text" name="content" value=""></label>
+        <input type="submit" value="submit">
+    </form>
+    
+</ul>
+{% endblock %}

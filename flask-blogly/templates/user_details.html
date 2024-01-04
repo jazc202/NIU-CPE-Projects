@@ -3,6 +3,12 @@
 {% block content %}
 <img src='{{user.image_url}}'>
 <h1>{{user.firstname}} {{user.lastname}}</h1>
+<ul>
+    {% for post in user_posts %}
+    <li><a href='/posts/{{post.id}}'>{{post.title}}</a></li>
+    {% endfor %}
+</ul>
 <a href="/users/{{user.id}}/edit" id="edit"  class="button">Edit</a>
 <a href="/users/{{user.id}}/delete" id="delete" class="button">Delete</a>
+<a href="/users/{{user.id}}/posts/new" id="new_post" class="button">New Post</a>
 {% endblock %}

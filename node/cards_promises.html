@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head></head>
+    <body>
+        <button id="click">Draw a card</button>
+        <div id="cards"></ul>
+    </body>
+    <script>
+        const button = document.querySelector('#click')
+        const container = document.querySelector('#cards')
+        const deck_url = 'https://deckofcardsapi.com/api/deck/new/shuffle/?deck_count=1'
+        let deck_id
+        //on page load, create new deck
+
+        fetch(deck_url)
+        .then((response)=>{
+            res = response.json()
+            return res
+        })
+
+        .then((res)=>{
+            deck_id = res['deck_id']
+
+            button.addEventListener('click', function(e) {
+                fetch(`https://deckofcardsapi.com/api/deck/${deck_id}/draw/?count=1`)
+
+                .then((response)=>{
+                    res = response.json()
+                    return res
+                })
+
+                .then((res)=>{
+                    let card = res.cards[0]
+                    console.log(card)
+                    let cardImage = document.createElement('img')
+                    cardImage.src = card.image
+                    container.append(cardImage)
+
+                })
+            })
+        })
+
+    </script>
+</html>
