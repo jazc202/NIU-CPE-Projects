@@ -5,11 +5,18 @@
         <label>Favorite number: <input type="text" id="fav"></label><button id="click">Click</button>
         <ul id="facts"></ul>
     </body>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
     <script>
+        
         let fav = document.querySelector('#fav')
         let button = document.querySelector('#click')
 
-        button.addEventListener('click', function(e){
+        async function numberFacts (url) {
+            const response = await axios.get(url)
+            return response         
+        }
+        button.addEventListener('click', async function(e){
             let url=`http://numbersapi.com/${fav.value}/trivia?json`
         
         // const options = {
@@ -24,33 +31,18 @@
             putIn.innerHTML = ''
 
             for (let i=0; i<4; i++) {
-                fetch(url)
-                    .then((response)=>{
-                        let res = response.json()
-                        return res
+                let facts = await numberFacts(url)
+
+                if (!facts.data.text) {
+                    let nums = fav.value.split(',')
+                    nums.forEach((number)=> {
+                        num = parseInt(number)
+                        console.log(facts.data)
+                        putIn.innerHTML += `<li>${facts.data[num]}</li`
                     })
-                    .then((res)=> {
-                        console.log(res)
-
-                        if (!res.text) {
-                            let nums = fav.value.split(',')
-                            console.log(nums)
-                            nums.forEach(number=>{
-                                num = parseInt(number)
-                                console.log(res[num])
-                                putIn.innerHTML += `<li>${res[num]}</li>`
-                            })
-                            
-                        }
-
-                        else {
-                            console.log('else')
-                            putIn.innerHTML += `<li>${res.text}</li>`
-                        }
-                        
-
-                    })
-                    .catch((err)=>console.log(err))
+                }
+                
+                putIn.innerHTML += `<li>${facts.data.text}</li>`
 
             }
             })
@@ -61,11 +53,6 @@
 //     *(Note: You’ll need to make multiple requests for this.)*
 // ## **Part 2: Deck of Cards**
 
-
-fetch("https://deckofcardsapi.com/api/deck/new/draw/?count=1")
-    .then((response)=>{
-        console.log(response)
-    })
 // 1. Make a request to the [Deck of Cards API](http://deckofcardsapi.com/) to request a single card from a newly shuffled deck. Once you have the card, ***console.log*** the value and the suit (e.g. “5 of spades”, “queen of diamonds”).
 // 2. Make a request to the deck of cards API to request a single card from a newly shuffled deck. Once you have the card, make a request to the same API to get one more card from the **same** deck.
     

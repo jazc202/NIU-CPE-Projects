@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head></head>
+    <body>
+        <button id="click">Draw a card</button>
+        <div id="cards"></ul>
+    </body>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script>
+        
+
+        
+        const button = document.querySelector('#click')
+        const container = document.querySelector('#cards')
+        const deck_url = 'https://deckofcardsapi.com/api/deck/new/shuffle/?deck_count=1'
+        let deck_id
+        //on page load, create new deck
+
+        async function shuffleDeck(deck) {
+            const d = await axios.get(deck)
+            return d.data
+        }
+
+        async function drawCard(deck_id) {
+            const card = await axios.get(`https://deckofcardsapi.com/api/deck/${deck_id}/draw/?count=1`)
+            return card.data.cards[0]
+
+        }
+        
+
+        button.addEventListener('click', async function(e) {
+                let deck = await shuffleDeck(deck_url)
+
+                let card = await drawCard(deck.deck_id)
+
+                let cardImage = document.createElement('img')
+                cardImage.src = card.image
+                container.append(cardImage)
+
+                console.log(card)
+            })
+
+    </script>
+</html>
